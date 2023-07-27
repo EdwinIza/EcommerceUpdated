@@ -1,0 +1,85 @@
+<div class="register-container">
+  <div class="form-container">
+    <h2>{{'Sign_Up_to' | translate }}</h2>
+    <nz-alert
+      *ngIf="errorMessage"
+      nzShowIcon
+      nzType="error"
+      [nzMessage]="errorMessage"
+      [ngStyle]="{ 'margin-bottom': '16px' }"
+    ></nz-alert>
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="input-container">
+        <label for="fullName">{{'Full_name' | translate }}</label>
+        <input
+          nz-input
+          type="text"
+          name="fullName"
+          [(ngModel)]="fullName"
+          placeholder="{{'Enter_Full_name' | translate }}"
+          [ngClass]="{'required-field': !fullName}"
+        />
+      </div>
+      <div class="input-container">
+        <label for="email">{{'Email_address' | translate }}</label>
+        <input
+          nz-input
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="{{'placeholder_loging' | translate }}"
+          [ngClass]="{'required-field': !email}"
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" 
+        />
+      </div>
+      <div class="🤪">
+        <div class="input-container">
+          <label for="password">{{'Password' | translate }}</label>
+          <input
+            nz-input
+            type="password"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="{{'strong_password' | translate }}"
+            [ngClass]="{'required-field': !password}"
+          />
+        </div>
+        <div class="input-container">
+          <label for="confirmPassword">{{'Confirm_password' | translate }}</label>
+          <input
+            nz-input
+            type="password"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            placeholder="{{'repeat_password' | translate }}"
+            [ngClass]="{'required-field': !confirmPassword}"
+          />
+        </div>
+      </div>
+      <div class="✅">
+        <div class="checkbox-container">
+          <input nz-input type="checkbox" />
+          <span>{{'agree_politics' | translate }}</span>
+        </div>
+        <div class="checkbox-container">
+          <input nz-input type="checkbox" />
+          <span>{{'agree_privacy' | translate }}</span>
+        </div>
+      </div>
+      <div class="cta-container">
+        <!-- <input type="submit" value="Sign up" /> -->
+        <button
+          nz-button
+          type="submit"
+          [disabled]="!canSubmit()"
+          [nzLoading]="loading"
+        >
+          {{'sign_up' | translate }}
+        </button>
+        <div>
+          <div><a routerLink="/login">{{'existing_user' | translate }}</a></div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

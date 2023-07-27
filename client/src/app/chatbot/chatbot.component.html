@@ -1,0 +1,43 @@
+<!-- app.component.html -->
+<div class="botIcon">
+    <div class="botIconContainer">
+      <div class="iconInner" (click)="toggleChat()">
+        <i class="fa fa-commenting" aria-hidden="true"></i>
+      </div>
+    </div>
+    <div class="Layout Layout-open Layout-expand Layout-right" [ngClass]="{'Layout-expand': isExpanded}">
+      <div class="Messenger_messenger">
+        <div class="Messenger_header">
+          <h4 class="Messenger_prompt">¿En qué puedo ayudarte?</h4>
+          <span class="chat_close_icon" (click)="toggleChat()">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="Messenger_content">
+          <div class="Messages">
+            <div class="Messages_list" #messagesContainer>
+              <!-- Aquí se mostrarán las conversaciones -->
+              <div class="chat-message" *ngFor="let message of messages">
+                <div class="message-bubble" [ngClass]="message.startsWith('You') ? 'user-message' : 'bot-message'">
+                  {{ message }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <form id="messenger" (submit)="sendMessage()">
+            <div class="Input Input-blank">
+              <input name="msg" class="Input_field" placeholder="Envía un mensaje..." [(ngModel)]="userInput" />
+              <button type="submit" class="Input_button Input_button-send">
+                <div class="Icon">
+                  <svg viewBox="1496 193 57 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <!-- Icono de enviar mensaje aquí -->
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
