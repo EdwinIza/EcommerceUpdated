@@ -10,6 +10,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { CityTestComponent } from './city-test/city-test.component'; // Replace 'path/to' with the actual path to your CityTestComponent
+import { ShoesComponent } from './shoes/shoes.component'; // Importar el componente Shoes
+import { ElectronicsComponent } from './electronics/electronics.component'; // Importar el componente Electronics
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +23,8 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
   },
   { path: 'product/:id', component: ProductComponent },
+  { path: 'shoes', component: ShoesComponent }, // Ruta para el componente Shoes
+  { path: 'electronics', component: ElectronicsComponent }, // Ruta para el componente Electronics
   { path: 'cart', component: CartComponent },
   {
     path: 'checkout',
@@ -33,6 +37,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
   },
   { path: 'city-test', component: CityTestComponent }, // Add this line for CityTestComponent
+ 
 ];
 
 @NgModule({

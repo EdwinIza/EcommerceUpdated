@@ -13,17 +13,6 @@ import { TranslateService } from '@ngx-translate/core';
 export class HomeComponent implements OnInit {
   text: string;
   products: Product[] = [];
-  categories: any[] = [
-    {
-      name: 'Laptops',
-    },
-    {
-      name: 'Accessories',
-    },
-    {
-      name: 'Cameras',
-    },
-  ];
   loading = false;
   productPageCounter = 1;
   additionalLoading = false;

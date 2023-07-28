@@ -38,7 +38,10 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ChatbotComponent } from './chatbot/chatbot.component';
-import { CityTestComponent } from './city-test/city-test.component'
+import { CityTestComponent } from './city-test/city-test.component';
+import { ShoesComponent } from './shoes/shoes.component';
+import { ElectronicsComponent } from './electronics/electronics.component';
+import { ShoesCardComponent } from './shoes-card/shoes-card.component'
 
 ;
 registerLocaleData(en);
@@ -59,6 +62,9 @@ registerLocaleData(en);
     ProductCardComponent,
     ChatbotComponent,
     CityTestComponent,
+    ShoesComponent,
+    ElectronicsComponent,
+    ShoesCardComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,15 @@
+<div *ngIf="loading">Cargando...</div>
+<div *ngIf="!loading">
+  <!-- Aquí muestras la lista de productos una vez que los datos se hayan cargado -->
+  <div *ngFor="let shoes of product">
+    <app-product-card
+      [id]="shoes.id"
+      [title]="shoes.name"
+      [image]="shoes.image"
+      [short_desc]="shoes.description"
+      [category]="shoes.category"
+      [quantity]="shoes.quantity"
+      [price]="shoes.price"
+    ></app-product-card>
+  </div>
+</div>
