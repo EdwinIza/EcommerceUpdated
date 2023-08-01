@@ -1,15 +1,37 @@
-<div *ngIf="loading">Cargando...</div>
-<div *ngIf="!loading">
-  <!-- Aquí muestras la lista de productos una vez que los datos se hayan cargado -->
-  <div *ngFor="let shoes of product">
-    <app-product-card
-      [id]="shoes.id"
-      [title]="shoes.name"
-      [image]="shoes.image"
-      [short_desc]="shoes.description"
-      [category]="shoes.category"
-      [quantity]="shoes.quantity"
-      [price]="shoes.price"
-    ></app-product-card>
+<div class="home-container">
+  <div class="categories">
+    <div class="categories__header">
+      <h2>{{ 'cat' | translate }}</h2>
+    </div>
+    <div class="categories_listaupdt">
+      <div class="categories_container_updt" routerLink="/">
+        {{ 'home_header' | translate }}
+      </div>
+      <div class="categories_container_updt" routerLink="/electronics">
+        {{ 'Electronics' | translate }}
+      </div>
+    </div>
+  </div>
+  <div class="products">
+    <div class="products__header">
+      <h2>{{ 'new_products' | translate }}</h2>
+    </div>
+    <div *ngIf="loading" class="products__loading">
+      <ng-template #indicatorTemplate>
+        <i nz-icon nzType="loading" [ngStyle]="{ 'font-size': '2rem', margin: '0 auto' }"></i>
+      </ng-template>
+      <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+    </div>
+    <div class="products__list" *ngIf="!loading">
+      <app-product-card *ngFor="let n of shoesProducts" [id]="n.id" [title]="n.title" [image]="n.image" [price]="n.price"
+        [short_desc]="n.short_desc" [category]="n.category" [quantity]="n.quantity"
+        [onAdd]="cartService.addProduct.bind(cartService)">
+      </app-product-card>
+    </div>
+  </div>
+  <div class="load-products">
+    <button nz-button (click)="showMoreProducts()" [nzLoading]="additionalLoading">
+      {{ 'show_more' | translate }}
+    </button>
   </div>
 </div>
