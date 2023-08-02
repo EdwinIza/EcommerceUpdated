@@ -10,6 +10,7 @@ export class ChatbotComponent {
   messages: string[] = [];
   userInput: string = '';
   isExpanded: boolean = false; // Variable para controlar la expansión del cuadro de chat
+  chatbotAccessCount: number = 0;
 
   sendMessage(): void {
     if (this.userInput.trim() !== '') {
@@ -17,7 +18,7 @@ export class ChatbotComponent {
       const botReply = this.botResponse(this.userInput);
       this.messages.push('Bot: ' + botReply);
       this.userInput = '';
-
+      this.chatbotAccessCount++;
       // Scroll hacia abajo para mostrar el último mensaje
       if (this.messagesContainer) {
         this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
@@ -46,5 +47,6 @@ export class ChatbotComponent {
 
   toggleChat(): void {
     this.isExpanded = !this.isExpanded; // Cambiar el valor de la variable de expansión al hacer clic en el círculo
+    this.chatbotAccessCount++;
   }
 }
