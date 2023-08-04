@@ -1,0 +1,86 @@
+/* Estilos generales */
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilos del contenedor del dashboard */
+.dashboard-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 30px auto;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* Estilos de las secciones del dashboard */
+.section {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos de los encabezados de sección */
+h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333333;
+}
+
+/* Estilos de la lista de métricas */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+/* Estilos para las etiquetas de métricas */
+.metric-label {
+  font-weight: 500;
+  color: #666666;
+}
+
+/* Colores para las etiquetas de métricas */
+.metric-label, .metric-group h2 {
+  color: #4a90e2;
+}
+
+/* Efectos de transición al pasar el mouse sobre los elementos */
+.section:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Estilos para los botones de vuelta al inicio */
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.back-to-top button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+}
+
+.back-to-top button:hover {
+  background-color: #0056b3;
+}

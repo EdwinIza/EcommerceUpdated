@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CountryApiService } from '../services/country-api.service';
 import { CityApiService } from '../services/city-api.service';
 import { MetricsService } from '../services/metrics.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -82,7 +83,7 @@ export class CheckoutComponent implements OnInit {
   ];
 
   constructor(private _auth: AuthService, private _cart: CartService, private translate: TranslateService, private countryApiService: CountryApiService,
-    private cityApiService: CityApiService,private metricsService: MetricsService ) {
+    private cityApiService: CityApiService,private metricsService: MetricsService, private router: Router ) {
     this.billingAddress = [
       {
         name: 'Full name',
@@ -142,7 +143,8 @@ export class CheckoutComponent implements OnInit {
     this._auth.user.subscribe((user) => {
       // Si el usuario ha cerrado sesión y había iniciado el proceso de checkout, guardar la métrica de transacción con éxito falso
       if (!user && this.isCheckoutInProgress) {
-        this.saveTransactionMetrics(this.currentUser.id, this.orderId, false);
+        const transactionId = 'CANCEL_' + Math.random().toString(36).substr(2, 9); // Generar un ID único
+        this.saveTransactionMetrics(this.currentUser.id, transactionId, false);
       }
     });
 
@@ -287,8 +289,20 @@ export class CheckoutComponent implements OnInit {
   ngOnDestroy(): void {
     // Si el componente se destruye antes de completar el checkout, asegurarse de guardar la métrica de transacción con éxito falso
     if (this.isCheckoutInProgress && this.currentUser) {
-      this.saveTransactionMetrics(this.currentUser.id, this.orderId, false);
+      const transactionId = 'CANCEL_' + Math.random().toString(36).substr(2, 9); // Generar un ID único
+      this.saveTransactionMetrics(this.currentUser.id, transactionId, false);
     }
+  }
+
+  cancelCheckout(): void {
+    // Aquí puedes realizar las acciones que desees cuando el usuario cancela el checkout
+    // Por ejemplo, guardar las métricas de transacción con éxito falso
+    const transactionId = 'CANCEL_' + Math.random().toString(36).substr(2, 9); // Generar un ID único
+    this.saveTransactionMetrics(this.currentUser.id, transactionId, false);
+    // Luego, redirigir al usuario a la página deseada
+    // Por ejemplo, redirigir al inicio del proceso de compra o a otra página
+    // Reemplaza '/desired-page' por la ruta que desees redirigir al usuario
+    this.router.navigate(['/']);
   }
 
 }

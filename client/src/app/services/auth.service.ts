@@ -56,7 +56,5 @@ export class AuthService {
     this.userSubject.next(null);
   }
 
-  getUserById(userId: number): Observable<any> {
-    return this._api.getTypeRequest(`users/${userId}`);
-  }
+  
 }

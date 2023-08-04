@@ -141,6 +141,9 @@
         </div>
       </div>
     </div>
+    <button nz-button nzType="default" (click)="cancelCheckout()">
+      {{ 'Cancel' | translate }}
+    </button>
   </div>
   <!-- LAST STEP - THANK YOU -->
   <div *ngIf="currentStep === 4">

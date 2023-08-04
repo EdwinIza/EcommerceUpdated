@@ -12,6 +12,7 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { CityTestComponent } from './city-test/city-test.component'; // Replace 'path/to' with the actual path to your CityTestComponent
 import { ShoesComponent } from './shoes/shoes.component'; // Importar el componente Shoes
 import { ElectronicsComponent } from './electronics/electronics.component'; // Importar el componente Electronics
+import { DashboardComponent } from './dashboard/dashboard.component'; // Importar el componente DashboardComponent
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,7 +37,8 @@ const routes: Routes = [
     component: OrderHistoryComponent,
     canActivate: [AuthGuardService],
   },
-  { path: 'city-test', component: CityTestComponent }, // Add this line for CityTestComponent
+  { path: 'city-test', component: CityTestComponent },
+  { path: 'dashboard', component: DashboardComponent }, // Ruta para el componente DashboardComponent // Add this line for CityTestComponent
  
 ];
 

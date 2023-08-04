@@ -41,9 +41,13 @@ import { ChatbotComponent } from './chatbot/chatbot.component';
 import { CityTestComponent } from './city-test/city-test.component';
 import { ShoesComponent } from './shoes/shoes.component';
 import { ElectronicsComponent } from './electronics/electronics.component';
-import { ShoesCardComponent } from './shoes-card/shoes-card.component'
+import { ShoesCardComponent } from './shoes-card/shoes-card.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
-;
+
 registerLocaleData(en);
 
 @NgModule({
@@ -65,8 +69,13 @@ registerLocaleData(en);
     ShoesComponent,
     ElectronicsComponent,
     ShoesCardComponent,
+    DashboardComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatListModule,
+    MatButtonModule,
     BrowserModule,
     AppRoutingModule,
     IvyCarouselModule,
