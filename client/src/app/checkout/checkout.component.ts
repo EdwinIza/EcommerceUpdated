@@ -4,6 +4,8 @@ import { CartService } from '../services/cart.service';
 import { TranslateService } from '@ngx-translate/core';
 import { CountryApiService } from '../services/country-api.service';
 import { CityApiService } from '../services/city-api.service';
+import { MetricsService } from '../services/metrics.service';
+
 
 @Component({
   selector: 'app-checkout',
@@ -22,6 +24,7 @@ export class CheckoutComponent implements OnInit {
   loading = false;
   successMessage = '';
   orderId;
+  isCheckoutInProgress: boolean = false; 
 
   billingAddress = [
     {
@@ -79,7 +82,7 @@ export class CheckoutComponent implements OnInit {
   ];
 
   constructor(private _auth: AuthService, private _cart: CartService, private translate: TranslateService, private countryApiService: CountryApiService,
-    private cityApiService: CityApiService) {
+    private cityApiService: CityApiService,private metricsService: MetricsService ) {
     this.billingAddress = [
       {
         name: 'Full name',
@@ -134,6 +137,14 @@ export class CheckoutComponent implements OnInit {
         required: true,
       },
     ];
+
+    // Suscribirse al evento de cambio de usuario (cierre de sesión)
+    this._auth.user.subscribe((user) => {
+      // Si el usuario ha cerrado sesión y había iniciado el proceso de checkout, guardar la métrica de transacción con éxito falso
+      if (!user && this.isCheckoutInProgress) {
+        this.saveTransactionMetrics(this.currentUser.id, this.orderId, false);
+      }
+    });
 
     this._auth.user.subscribe((user) => {
       console.log(user); // Verificar el contenido del objeto user
@@ -191,26 +202,50 @@ export class CheckoutComponent implements OnInit {
 
   submitCheckout() {
     this.loading = true;
-    console.log(this.currentUser.id)
+    console.log(this.currentUser.id);
     setTimeout(() => {
-      this._cart
-        .submitCheckout(this.currentUser.id, this.cartData)
-        .subscribe(
-          (res: any) => {
-            console.log(res);
-            this.loading = false;
-            this.orderId = res.orderId;
-            this.products = res.products;
-            this.currentStep = 4;
-            this._cart.clearCart();
-          },
-          (err) => {
-            console.log(err);
-            console.log(this.currentUser.user.id)
-            this.loading = false;
-          }
-        );
+      this._cart.submitCheckout(this.currentUser.id, this.cartData).subscribe(
+        (res: any) => {
+          console.log(res);
+          this.loading = false;
+          this.orderId = res.orderId;
+          this.products = res.products;
+          this.currentStep = 4;
+          this._cart.clearCart();
+
+          // Guardar las métricas de transacción después de que se haya realizado la compra
+          this.saveTransactionMetrics(this.currentUser.id, this.orderId, true);
+        },
+        (err) => {
+          console.log(err);
+          console.log(this.currentUser.user.id);
+          this.loading = false;
+
+          // Guardar las métricas de transacción en caso de error en la compra
+          this.saveTransactionMetrics(this.currentUser.id, this.orderId, false);
+        }
+      );
     }, 750);
+  }
+
+   // Método para guardar las métricas de transacción
+   saveTransactionMetrics(user_id: number, transaction_id: string, transaction_success: boolean): void {
+    const timestamp = new Date().toISOString(); // Generamos la marca de tiempo actual
+    const data = {
+      user_id: user_id,
+      timestamp: timestamp,
+      transaction_id: transaction_id,
+      transaction_success: transaction_success,
+    };
+
+    this.metricsService.saveTransactionMetrics(data).subscribe(
+      () => {
+        console.log('Métricas de transacción guardadas correctamente');
+      },
+      (error) => {
+        console.error('Error al guardar las métricas de transacción:', error);
+      }
+    );
   }
 
   getProgressPrecent() {
@@ -246,6 +281,13 @@ export class CheckoutComponent implements OnInit {
     if (this.currentStep > 1) {
       this.currentStep -= 1;
       localStorage.setItem('checkoutStep', this.currentStep.toString());
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Si el componente se destruye antes de completar el checkout, asegurarse de guardar la métrica de transacción con éxito falso
+    if (this.isCheckoutInProgress && this.currentUser) {
+      this.saveTransactionMetrics(this.currentUser.id, this.orderId, false);
     }
   }
 

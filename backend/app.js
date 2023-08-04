@@ -23,6 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 const indexRouter = require("./routes/index");
 app.use("/", indexRouter);
 
+
 // Health check
 app.get("/", (req, res) => {
   res.status(200).send("Health Check");

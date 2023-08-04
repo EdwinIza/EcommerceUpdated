@@ -23,7 +23,6 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `addresses`
 --
@@ -368,11 +367,10 @@ INSERT INTO `orders_details` (`id`, `order_id`, `product_id`, `quantity`) VALUES
 (195, 118, 2, 1),
 (196, 119, 3, 1);
 
--- --------------------------------------------------------
-
 --
 -- Table structure for table `products`
 --
+
 
 CREATE TABLE `products` (
   `id` int(10) NOT NULL,
